@@ -1,0 +1,99 @@
+<!-- 
+Responsive HTML Table With Pure CSS - Web Design/UI Design
+
+Code written by:
+👨🏻‍⚕️ Coding Design (Jeet Saru)
+
+> You can do whatever you want with the code. However if you love my content, you can **SUBSCRIBED** my YouTube Channel.
+
+🌎link: www.youtube.com/codingdesign 
+ -->
+<!DOCTYPE html>
+
+<head>
+    <script src="js/script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Assignments Mycourseville</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="table">
+        <section class="table__header">
+            <div class="input-group"> </div>
+            <section class="table__Subheader">
+                <h1 style="font-weight: bolder;">Assignment <br></h1>
+                <div> ชื่อ : Pawarit <br> 
+                นามสกุล : Klinsiengdee </div>
+            </section>
+            <section class="table__SSubheader"> 
+                <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/logo/cv-logo.png" width=45% >
+                <div class="export__file">
+                    <label for="Logout" class="export__file-btn" title="Logout"></label>
+                    <input type="button" value="Logout" onclick="msg()" id="export-file">
+                    <div class="export__file-options">
+                        <label>Logout &nbsp; &#10140;</label>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Courses </th>
+                        <th> Title </th>
+                        <th> Due Date </th>
+                        <th> Status </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/thumbs/python%20logo%20trans_1532575073.png" alt=""> Computer Engineering Essentials</td>
+                        <td> Final Project: Preparation (Set up an EC2 instance) </td>
+                        <td> 17 Dec, 2022 </td>
+                        <td>
+                            <p class="status Submitted">Submitted</p>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td><img src="https://www.mycourseville.com/sites/all/modules/courseville/files/thumbs/2110316_1401164427.png" alt=""> Programming Languages Principles </td>
+                        <td> scala Homework (aj Toe) </td>
+                        <td> 27 Aug, 2023 </td>
+                        <td>
+                            <p class="status Overdue">Overdue</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://mycourseville-default.s3.ap-southeast-1.amazonaws.com/useruploaded_course_files/2022_2/31692/course_icon/3200106-172879-16710902940346.svg" alt=""> Fundamental oral biology for oral health </td>
+                        <td> Food diary </td>
+                        <td> 14 Mar, 2023 </td>
+                        <td>
+                            <p class="status Assigned">Assigned</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://www.mycourseville.com/sites/all/modules/courseville/files/thumbs/2110316_1401164427.png" alt=""> Programming Languages Principles </td>
+                        <td> class work 3.1. Prabhas: recursive programming </td>
+                        <td> 25 May, 2023 </td>
+                        <td>
+                            <p class="status Submitted">Submitted</p>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</body>
+
+</html>
