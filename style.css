@@ -19,7 +19,7 @@ body {
 main.table {
     width: 82vw;
     height: 90vh;
-    background-color: #fff5;
+    background-color: rgba(255, 255, 255, 0.507);
 
     backdrop-filter: blur(10px);
     box-shadow: 0 .4rem .8rem #0005;
@@ -68,16 +68,6 @@ main.Subtable {
     /* border : 2px solid red; */
 }
 
-.table__subheader2 {
-    width: 30%;
-    height: 50%;
-
-    align-items: left;
-
-    border : 1px solid red;
-
-
-}
 
 
 .table__body {
@@ -203,7 +193,7 @@ tbody tr.hide td img {
 
 
 thead th.active,tbody td.active {
-    color: #6c00bd;
+    color: #3C87FF;
 }
 
 .export__file {
@@ -260,7 +250,7 @@ thead th.active,tbody td.active {
     height: 100%;
     padding: 28px 0 30px;
     margin: auto;
-    background: #fff;
+    background-color: rgba(255, 255, 255, 0.726);
     border-radius: 7px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   }
@@ -290,6 +280,7 @@ thead th.active,tbody td.active {
   }
   .task-input input::placeholder{
     color: #bfbfbf;
+    font-size: 16px;
   }
   .controls, li{
     display: flex;
