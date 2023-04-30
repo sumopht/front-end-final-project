@@ -1,17 +1,9 @@
-<!-- 
-Responsive HTML Table With Pure CSS - Web Design/UI Design
 
-Code written by:
-👨🏻‍⚕️ Coding Design (Jeet Saru)
-
-> You can do whatever you want with the code. However if you love my content, you can **SUBSCRIBED** my YouTube Channel.
-
-🌎link: www.youtube.com/codingdesign 
- -->
 <!DOCTYPE html>
 
 <head>
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
+    <script src="script_cv.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400&display=swap" rel="stylesheet">
@@ -22,24 +14,32 @@ Code written by:
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload=getUserProfile()>
     <main class="table">
         <section class="table__header">
             <div class="input-group"> </div>
             <section class="table__Subheader">
-                <h1 style="font-weight: bolder;">Assignment <br></h1>
-                <div> ชื่อ : Pawarit <br> 
-                นามสกุล : Klinsiengdee </div>
+                <h1 style="font-weight: bolder;">Assignment</h1>
+                <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
+                    Name-Surname (Thai) : <span id="thai-name-info"></span></p>
             </section>
             <section class="table__SSubheader"> 
                 <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/logo/cv-logo.png" width=45% >
-                <div class="export__file">
+
+                <!-- <section class="section-right">
+                    <button class="button logout-button" onclick=authorizeApplication()>Login</button>
+                </section> -->
+
+                <!-- <div class="export__file">
                     <label for="Logout" class="export__file-btn" title="Logout"></label>
-                    <input type="button" value="Logout" onclick="msg()" id="export-file">
+                    <input type="button" value="Logout" onclick="logout()" id="export-file">
                     <div class="export__file-options">
                         <label>Logout &nbsp; &#10140;</label>
                     </div>
-                </div>
+                </div> -->
+
+                <button onclick="logout()">Logout</button>
+
             </section>
         </section>
         <section class="table__body">
@@ -52,8 +52,8 @@ Code written by:
                         <th> Status </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="main-table-body">
+                    <!-- <tr>
                         <td> <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/thumbs/python%20logo%20trans_1532575073.png" alt=""> Computer Engineering Essentials</td>
                         <td> Final Project: Preparation (Set up an EC2 instance) </td>
                         <td> 17 Dec, 2022 </td>
@@ -85,6 +85,12 @@ Code written by:
                         <td>
                             <p class="status Submitted">Submitted</p>
                         </td>
+                    </tr> -->
+                    <tr id=0>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
                     </tr>
 
                 </tbody>
