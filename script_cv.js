@@ -5,7 +5,8 @@ const backendIPAddress = "127.0.0.1:3000";
 //     window.location.href = `http://${backendIPAddress}/courseville/auth_app`;
 // };
 
-const hasAlreadyRedirected = localStorage.getItem("hasAlreadyRedirected") === "true";
+const hasAlreadyRedirected =
+    localStorage.getItem("hasAlreadyRedirected") === "true";
 
 const authorizeApplication = () => {
     if (!hasAlreadyRedirected) {
@@ -14,9 +15,6 @@ const authorizeApplication = () => {
     }
 };
 
-
-
-// Example: Send Get user profile ("GET") request to backend server and show the response on the webpage
 const getUserProfile = async () => {
     const options = {
         method: "GET",
@@ -39,39 +37,76 @@ const getUserProfile = async () => {
         .catch((error) => console.error(error));
 };
 
-// TODO #3.5: Send Get Course Assignments ("GET") request with cv_cid to backend server
-//            and create Comp Eng Ess assignments table based on the response (itemid, title)
 
-// const createCompEngEssAssignmentTable = async () => {
-//     const table_body = document.getElementById("main-table-body");
-//     table_body.innerHTML = "";
-//     const cv_cid = document.getElementById("ces-cid-value").innerHTML;
-
-//     console.log(
-//         "This function should fetch 'get course assignments' route from backend server and show assignments in the table."
-//     );
-// };
+const createAssignmentTable = async (cv_cid) => {
+    const table_body = document.getElementById("main-table-body");
+    table_body.innerHTML = "";
+    console.log("hello", cv_cid);
+    const options = {
+        method: "GET",
+        credentials: "include",
+    };
+    let items;
+    await fetch(
+        `http://${backendIPAddress}/courseville/get_course_assignments/${cv_cid}`,
+        options
+    )
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data.data);
+            console.log("hello");
+            items = data.data;
+        })
+        .catch((error) => console.error(error));
+    items.map((item) => {
+        console.log("hello2");
+        table_body.innerHTML += `
+        <tr id="${item.itemid}">
+            <td> <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/thumbs/python%20logo%20trans_1532575073.png" alt=""> Computer Engineering Essentials</td>
+            <td>${item.title}</td>
+            <td> 17 Dec, 2022 </td>
+            <td>
+                <p class="status Submitted">Submitted</p>
+            </td>       
+        </tr>`;
+    });
+};
+function handleSelectChange() {
+    const cv_cid = document.getElementById("select-course").value;
+    // console.log("Selected value:", cv_cid);
+    createAssignmentTable(cv_cid);
+}
 
 const logout = async () => {
-    console.log('bye');
+    console.log("bye");
     window.location.href = `http://${backendIPAddress}/courseville/logout`;
     localStorage.removeItem("hasAlreadyRedirected");
-    // window.location.href = `http://www.youtube.com`;
 };
 
-// document.getElementById("group-id").innerHTML = getGroupNumber();
+const showCourses = async () => {
+    const course_dropdown = document.getElementById("select-course");
+    course_dropdown.innerHTML = "<option value='0'>Select Course</option>";
+    const options = {
+        method: "GET",
+        credentials: "include",
+    };
+    await fetch(`http://${backendIPAddress}/courseville/get_courses`, options)
+        .then((response) => response.json())
+        .then((data) => {
+            const courses = data;
+            console.log(courses.data.student);
+            courses.data.student.map((course) => {
+                // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
+                course_dropdown.innerHTML += `<option value="${course.cv_cid}">${course.cv_cid}</option>`;
+                // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
+            });
+        })
+        .catch((error) => console.error(error));
+};
 
-// const logout = async () => {
-//     console.log('bye');
-//     await fetch(
-//         `http://${backendIPAddress}/courseville/logout`,
-//         { credentials: "include" }
-//     );
-//     localStorage.removeItem("hasAlreadyRedirected");
-//     setTimeout(() => {
-//         // window.location.href = `http://${backendIPAddress}/courseville/auth_app`;
-//         window.location.href = `http://youtube.com`;
-//     }, 1000); // wait 1 second before redirecting
-// };
+function initPage() {
+    getUserProfile();
+    showCourses();
+}
 
 authorizeApplication();

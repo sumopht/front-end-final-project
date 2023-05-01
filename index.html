@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <head>
@@ -14,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload=getUserProfile()>
+<body onload=initPage()>
     <main class="table">
         <section class="table__header">
             <div class="input-group"> </div>
@@ -23,8 +22,8 @@
                 <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
                     Name-Surname (Thai) : <span id="thai-name-info"></span></p>
             </section>
-            <section class="table__SSubheader"> 
-                <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/logo/cv-logo.png" width=45% >
+            <section class="table__SSubheader">
+                <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/logo/cv-logo.png" width=45%>
 
                 <!-- <section class="section-right">
                     <button class="button logout-button" onclick=authorizeApplication()>Login</button>
@@ -37,9 +36,11 @@
                         <label>Logout &nbsp; &#10140;</label>
                     </div>
                 </div> -->
+                <label for="courses">Select a course:</label>
+                <select id="select-course" name="courses" onchange="handleSelectChange()">
+                </select>
 
-                <button onclick="logout()">Logout</button>
-
+                <button id="logout-button" onclick="logout()">Logout</button>
             </section>
         </section>
         <section class="table__body">
@@ -98,25 +99,26 @@
         </section>
     </main>
     <main class="Subtable">
-    </head>
-    <body>
-      <div class="wrapper">
-        <div class="task-input">
-          <img src="images/checklist.png" alt="icon"width=12%>
-          <input type="text" placeholder="Add a new task" font: 3px>
-        </div>
-        <div class="controls">
-          <div class="filters">
-            <span class="active" id="all">All</span>
-            <span id="pending">Pending</span>
-            <span id="completed">Completed</span>
-          </div>
-          <button class="clear-btn">Clear All</button>
-        </div>
-        <ul class="task-box"></ul>
-      </div>
-      <script src="script.js"></script>
-    </body>
+        </head>
+
+        <body>
+            <div class="wrapper">
+                <div class="task-input">
+                    <img src="images/checklist.png" alt="icon" width=12%>
+                    <input type="text" placeholder="Add a new task" font: 3px>
+                </div>
+                <div class="controls">
+                    <div class="filters">
+                        <span class="active" id="all">All</span>
+                        <span id="pending">Pending</span>
+                        <span id="completed">Completed</span>
+                    </div>
+                    <button class="clear-btn">Clear All</button>
+                </div>
+                <ul class="task-box"></ul>
+            </div>
+            <script src="script.js"></script>
+        </body>
 
     </main>
     <script src="script.js"></script>
