@@ -427,16 +427,17 @@ li {
 
 /* add button */
 #addtodo-button {
-  background-color: blue;
+  background-color: rgb(137, 178, 255);
   color: white;
   font-size: 16px;
   padding: 8px 16px;
   border: none;
   cursor: pointer;
+  border-radius: 20px;
 }
 
 #addtodo-button:hover {
-  background-color: darkblue;
+  background-color: rgb(27, 107, 255);
 }
 
 /* drop down list */
