@@ -121,7 +121,7 @@ thead th {
   left: 0;
   background-color: #d5d1defe;
   cursor: pointer;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 tbody tr:nth-child(even) {
@@ -243,23 +243,23 @@ tbody td.active {
 .wrapper {
   width: 100%;
   height: 100%;
-  padding: 28px 0 30px;
+  padding: 28px 1rem 30px 1rem;
   margin: auto;
   background-color: rgba(255, 255, 255, 0.726);
   border-radius: 7px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
-.task-input {
+/* .todo-header {
   height: 52px;
   padding: 0 25px;
   position: relative;
 }
-.task-input img {
+.todo-header img {
   top: 50%;
   position: absolute;
   transform: translate(17px, -50%);
 }
-.task-input input {
+.todo-header input {
   height: 100%;
   width: 100%;
   outline: none;
@@ -268,24 +268,36 @@ tbody td.active {
   padding: 0 20px 0 53px;
   border: 1px solid #999;
 }
-.task-input input:focus,
-.task-input input.active {
+.todo-header input:focus,
+.todo-header input.active {
   padding-left: 52px;
   border: 2px solid #3c87ff;
 }
-.task-input input::placeholder {
+.todo-header input::placeholder {
   color: #bfbfbf;
   font-size: 16px;
-}
-.controls,
-li {
+} */
+.todo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.controls {
-  padding: 18px 25px;
+  padding: 10px;
   border-bottom: 1px solid #ccc;
+}
+
+.todo-header img {
+  display: flex;
+  align-items: center;
+}
+
+.todo-header h2 {
+  margin: 0;
+  display: flex;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
 }
 .filters span {
   margin: 0 8px;

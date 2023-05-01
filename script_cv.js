@@ -79,7 +79,9 @@ const createAssignmentTable = async (cv_cid) => {
                                 <td>${item.title}</td>
                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
                                 <td>
-                                <button id="addtodo-button" onclick="logout()">Add</button>
+                                    <div style="text-align: center">
+                                        <button id="addtodo-button" onclick="logout()">Add</button>
+                                    </div>
                                 </td>
                             </tr>`;
                     })
