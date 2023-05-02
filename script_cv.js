@@ -1,9 +1,5 @@
-// TODO #4.0: Change this IP address to EC2 instance public IP address when you are going to deploy this web application
 const backendIPAddress = "127.0.0.1:3000";
 
-// const authorizeApplication = () => {
-//     window.location.href = `http://${backendIPAddress}/courseville/auth_app`;
-// };
 
 const hasAlreadyRedirected =
     localStorage.getItem("hasAlreadyRedirected") === "true";
@@ -37,11 +33,11 @@ const getUserProfile = async () => {
         .catch((error) => console.error(error));
 };
 
-// second try----------------------------------------
 const createAssignmentTable = async (cv_cid, course_title, icon) => {
     const table_body = document.getElementById("main-table-body");
     table_body.innerHTML = "";
     console.log("pass cv_cid succesfully");
+    console.log(1, course_title);
     if (cv_cid == -1) {
         const options = {
             method: "GET",
@@ -65,12 +61,8 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
                         )
                             .then((response) => response.json())
                             .then((data) => {
-                                // console.log(data.data);
-                                console.log("fetch all assignments");
                                 items = data.data;
-                                console.log(data)
                                 items.map((item) => {
-                                    // console.log("map succesfully");
                                     const options = {
                                         method: "GET",
                                         credentials: "include",
@@ -82,14 +74,12 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
                                     )
                                         .then((response) => response.json())
                                         .then((data) => {
-                                            // console.log(data.data);
-                                            // console.log("fetch assignment detail");
                                             assignments = data.data;
                                             if (isTimePast(assignments.duetime)) {
                                                 table_body.innerHTML += `
                                             <tr id="${item.itemid}">
-                                                <td><img src="${icon}"></td>
-                                                <td>${course_title}</td>
+                                                <td><img src="${course.course_icon}"></td>
+                                                <td>${course.title}</td>
                                                 <td>${item.title}</td>
                                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
                                                 <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
@@ -118,17 +108,12 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
         )
             .then((response) => response.json())
             .then((data) => {
-                // console.log(data.data);
-                console.log("fetch all assignments");
                 items = data.data;
-                console.log(data)
                 items.map((item) => {
-                    // console.log("map succesfully");
                     const options = {
                         method: "GET",
                         credentials: "include",
                     };
-
 
                     let assignments;
                     fetch(
@@ -137,8 +122,6 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
                     )
                         .then((response) => response.json())
                         .then((data) => {
-                            // console.log(data.data);
-                            // console.log("fetch assignment detail");
                             assignments = data.data;
                             if (isTimePast(assignments.duetime)) {
                                 table_body.innerHTML += `
@@ -164,7 +147,7 @@ function handleSelectChange() {
     const selectElement = document.getElementById("select-course").value;
     const [cv_cid, course_title, icon] = selectElement.split(",");
     createAssignmentTable(cv_cid, course_title, icon);
-    console.log(cv_cid);
+    console.log(cv_cid, course_title, icon);
 }
 
 const logout = async () => {
