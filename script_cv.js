@@ -26,7 +26,7 @@ const getUserProfile = async () => {
     )
         .then((response) => response.json())
         .then((data) => {
-            console.log(data.user);
+            // console.log(data.user);
             document.getElementById(
                 "eng-name-info"
             ).innerHTML = `${data.user.firstname_en} ${data.user.lastname_en}`;
@@ -53,11 +53,11 @@ const createAssignmentTable = async (cv_cid) => {
     )
         .then((response) => response.json())
         .then((data) => {
-            console.log(data.data);
+            // console.log(data.data);
             console.log("fetch all assignments");
             items = data.data;
             items.map((item) => {
-                console.log("map succesfully");
+                // console.log("map succesfully");
                 const options = {
                     method: "GET",
                     credentials: "include",
@@ -71,8 +71,8 @@ const createAssignmentTable = async (cv_cid) => {
                 )
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data.data);
-                        console.log("fetch assignment detail");
+                        // console.log(data.data);
+                        // console.log("fetch assignment detail");
                         assignments = data.data;
                         if (isTimePast(assignments.duetime)) {
                             table_body.innerHTML += `
@@ -81,7 +81,7 @@ const createAssignmentTable = async (cv_cid) => {
                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
                                 <td>
                                     <div style="text-align: center">
-                                        <button id="addtodo-button" onclick="logout()">Add</button>
+                                        <button id="addtodo-button" onclick="addTaskToDB('${item.title}')">Add</button>
                                     </div>
                                 </td>
                             </tr>`;
@@ -101,7 +101,7 @@ function handleSelectChange() {
 }
 
 const logout = async () => {
-    console.log("bye");
+    console.log("logout successfully");
     window.location.href = `http://${backendIPAddress}/courseville/logout`;
     localStorage.removeItem("hasAlreadyRedirected");
 };
@@ -117,7 +117,7 @@ const showCourses = async () => {
         .then((response) => response.json())
         .then((data) => {
             const courses = data;
-            console.log(courses.data.student);
+            // console.log(courses.data.student);
             courses.data.student.map((course) => {
                 fetch(`http://${backendIPAddress}/courseville/get_course_info/${course.cv_cid}`, options)
                     .then((response) => response.json())
@@ -136,6 +136,7 @@ const showCourses = async () => {
 function initPage() {
     getUserProfile();
     showCourses();
+    showTasksInTable();
 }
 
 const unixTimeToDateTime = (unixTimestamp) => {
