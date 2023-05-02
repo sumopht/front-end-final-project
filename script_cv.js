@@ -1,4 +1,4 @@
-const backendIPAddress = "127.0.0.1:3000";
+const backendIPAddress = "54.146.241.21:3000";
 
 
 const hasAlreadyRedirected =
