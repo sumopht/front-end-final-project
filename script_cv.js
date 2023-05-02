@@ -74,7 +74,8 @@ const createAssignmentTable = async (cv_cid) => {
                         console.log(data.data);
                         console.log("fetch assignment detail");
                         assignments = data.data;
-                        table_body.innerHTML += `
+                        if (isTimePast(assignments.duetime)) {
+                            table_body.innerHTML += `
                             <tr id="${item.itemid}">
                                 <td>${item.title}</td>
                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
@@ -84,6 +85,7 @@ const createAssignmentTable = async (cv_cid) => {
                                     </div>
                                 </td>
                             </tr>`;
+                        }
                     })
                     .catch((error) => console.error(error));
             });
@@ -156,6 +158,9 @@ const unixTimeToDateTime = (unixTimestamp) => {
     return formattedTime;
 };
 
-
+const isTimePast = (duetime) => {
+    const now = Math.floor(Date.now() / 1000); // current time in Unix timestamp format
+    return now > duetime ? false : true;
+}
 
 authorizeApplication();
