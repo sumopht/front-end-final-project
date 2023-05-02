@@ -42,54 +42,121 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
     const table_body = document.getElementById("main-table-body");
     table_body.innerHTML = "";
     console.log("pass cv_cid succesfully");
-    const options = {
-        method: "GET",
-        credentials: "include",
-    };
-    let items;
-    fetch(
-        `http://${backendIPAddress}/courseville/get_course_assignments/${cv_cid}`,
-        options
-    )
-        .then((response) => response.json())
-        .then((data) => {
-            // console.log(data.data);
-            console.log("fetch all assignments");
-            items = data.data;
-            console.log(data)
-            items.map((item) => {
-                // console.log("map succesfully");
-                const options = {
-                    method: "GET",
-                    credentials: "include",
-                };
+    if (cv_cid == -1) {
+        const options = {
+            method: "GET",
+            credentials: "include",
+        };
+        await fetch(`http://${backendIPAddress}/courseville/get_courses`, options)
+            .then((response) => response.json())
+            .then((data) => {
+                const courses = data;
+                courses.data.student.map((course) => {
+                    if (course.semester == 2) {
+                        console.log(course);
+                        const options = {
+                            method: "GET",
+                            credentials: "include",
+                        };
+                        let items;
+                        fetch(
+                            `http://${backendIPAddress}/courseville/get_course_assignments/${course.cv_cid}`,
+                            options
+                        )
+                            .then((response) => response.json())
+                            .then((data) => {
+                                // console.log(data.data);
+                                console.log("fetch all assignments");
+                                items = data.data;
+                                console.log(data)
+                                items.map((item) => {
+                                    // console.log("map succesfully");
+                                    const options = {
+                                        method: "GET",
+                                        credentials: "include",
+                                    };
+                                    let assignments;
+                                    fetch(
+                                        `http://${backendIPAddress}/courseville/get_assignment_detail/${item.itemid}`,
+                                        options
+                                    )
+                                        .then((response) => response.json())
+                                        .then((data) => {
+                                            // console.log(data.data);
+                                            // console.log("fetch assignment detail");
+                                            assignments = data.data;
+                                            if (isTimePast(assignments.duetime)) {
+                                                table_body.innerHTML += `
+                                            <tr id="${item.itemid}">
+                                                <td><img src="${icon}"></td>
+                                                <td>${course_title}</td>
+                                                <td>${item.title}</td>
+                                                <td>${unixTimeToDateTime(assignments.duetime)}</td>
+                                                <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
+                                            </tr>`;
+                                            }
+                                        })
+                                        .catch((error) => console.error(error));
+                                });
+                            })
+                            .catch((error) => console.error(error));
+
+                    }
+
+                });
+            })
+            .catch((error) => console.error(error));
+    } else {
+        const options = {
+            method: "GET",
+            credentials: "include",
+        };
+        let items;
+        fetch(
+            `http://${backendIPAddress}/courseville/get_course_assignments/${cv_cid}`,
+            options
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                // console.log(data.data);
+                console.log("fetch all assignments");
+                items = data.data;
+                console.log(data)
+                items.map((item) => {
+                    // console.log("map succesfully");
+                    const options = {
+                        method: "GET",
+                        credentials: "include",
+                    };
 
 
-                let assignments;
-                fetch(
-                    `http://${backendIPAddress}/courseville/get_assignment_detail/${item.itemid}`,
-                    options
-                )
-                    .then((response) => response.json())
-                    .then((data) => {
-                        // console.log(data.data);
-                        // console.log("fetch assignment detail");
-                        assignments = data.data;
-                        if (isTimePast(assignments.duetime)) {
-                            table_body.innerHTML += `
-                            <tr id="${item.itemid}">
-                                <td><img src="${icon}"></td>
-                                <td>${course_title}</td>
-                                <td>${item.title}</td>
-                                <td>${unixTimeToDateTime(assignments.duetime)}</td>
-                                <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
-                            </tr>`;
-                        }
-                    })
-                    .catch((error) => console.error(error));
-            });
-        })
-        .catch((error) => console.error(error));
+                    let assignments;
+                    fetch(
+                        `http://${backendIPAddress}/courseville/get_assignment_detail/${item.itemid}`,
+                        options
+                    )
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // console.log(data.data);
+                            // console.log("fetch assignment detail");
+                            assignments = data.data;
+                            if (isTimePast(assignments.duetime)) {
+                                table_body.innerHTML += `
+                                <tr id="${item.itemid}">
+                                    <td><img src="${icon}"></td>
+                                    <td>${course_title}</td>
+                                    <td>${item.title}</td>
+                                    <td>${unixTimeToDateTime(assignments.duetime)}</td>
+                                    <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
+                                </tr>`;
+                            }
+                        })
+                        .catch((error) => console.error(error));
+                });
+            })
+            .catch((error) => console.error(error));
+
+    }
 
 };
 
@@ -97,6 +164,7 @@ function handleSelectChange() {
     const selectElement = document.getElementById("select-course").value;
     const [cv_cid, course_title, icon] = selectElement.split(",");
     createAssignmentTable(cv_cid, course_title, icon);
+    console.log(cv_cid);
 }
 
 const logout = async () => {
@@ -107,7 +175,7 @@ const logout = async () => {
 
 const showCourses = async () => {
     const course_dropdown = document.getElementById("select-course");
-    course_dropdown.innerHTML = "<option value='0'>Select Course</option>";
+    course_dropdown.innerHTML = "<option value='0'>Select Course</option><option value='-1'>Every course</option>";
     const options = {
         method: "GET",
         credentials: "include",
@@ -118,15 +186,17 @@ const showCourses = async () => {
             const courses = data;
             // console.log(courses.data.student);
             courses.data.student.map((course) => {
-                fetch(`http://${backendIPAddress}/courseville/get_course_info/${course.cv_cid}`, options)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        const item1 = data;
-                        // console.log(item1);
-                        // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
-                        course_dropdown.innerHTML += `<option value="${course.cv_cid}, ${item1.data.title}, ${item1.data.course_icon}">${item1.data.title}</option>`;
-                        // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
-                    }).catch((error) => console.error(error));
+                if (course.semester == 2) {
+                    fetch(`http://${backendIPAddress}/courseville/get_course_info/${course.cv_cid}`, options)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            const item1 = data;
+                            // console.log(item1);
+                            // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
+                            course_dropdown.innerHTML += `<option value="${course.cv_cid}, ${item1.data.title}, ${item1.data.course_icon}">${item1.data.title}</option>`;
+                            // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
+                        }).catch((error) => console.error(error));
+                }
             });
         })
         .catch((error) => console.error(error));
