@@ -38,7 +38,7 @@ const getUserProfile = async () => {
 };
 
 // second try----------------------------------------
-const createAssignmentTable = async (cv_cid) => {
+const createAssignmentTable = async (cv_cid, course_title, icon) => {
     const table_body = document.getElementById("main-table-body");
     table_body.innerHTML = "";
     console.log("pass cv_cid succesfully");
@@ -56,6 +56,7 @@ const createAssignmentTable = async (cv_cid) => {
             // console.log(data.data);
             console.log("fetch all assignments");
             items = data.data;
+            console.log(data)
             items.map((item) => {
                 // console.log("map succesfully");
                 const options = {
@@ -77,13 +78,11 @@ const createAssignmentTable = async (cv_cid) => {
                         if (isTimePast(assignments.duetime)) {
                             table_body.innerHTML += `
                             <tr id="${item.itemid}">
+                                <td><img src="${icon}"></td>
+                                <td>${course_title}</td>
                                 <td>${item.title}</td>
                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
-                                <td>
-                                    <div style="text-align: center">
-                                        <button id="addtodo-button" onclick="addTaskToDB('${item.title}')">Add</button>
-                                    </div>
-                                </td>
+                                <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
                             </tr>`;
                         }
                     })
@@ -95,9 +94,9 @@ const createAssignmentTable = async (cv_cid) => {
 };
 
 function handleSelectChange() {
-    const cv_cid = document.getElementById("select-course").value;
-    // console.log("Selected value:", cv_cid);
-    createAssignmentTable(cv_cid);
+    const selectElement = document.getElementById("select-course").value;
+    const [cv_cid, course_title, icon] = selectElement.split(",");
+    createAssignmentTable(cv_cid, course_title, icon);
 }
 
 const logout = async () => {
@@ -123,9 +122,9 @@ const showCourses = async () => {
                     .then((response) => response.json())
                     .then((data) => {
                         const item1 = data;
-                        // console.log(item1.data.title);
+                        // console.log(item1);
                         // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
-                        course_dropdown.innerHTML += `<option value="${course.cv_cid}">${item1.data.title}</option>`;
+                        course_dropdown.innerHTML += `<option value="${course.cv_cid}, ${item1.data.title}, ${item1.data.course_icon}">${item1.data.title}</option>`;
                         // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
                     }).catch((error) => console.error(error));
             });
@@ -163,5 +162,22 @@ const isTimePast = (duetime) => {
     const now = Math.floor(Date.now() / 1000); // current time in Unix timestamp format
     return now > duetime ? false : true;
 }
+
+const estimateDaysLeft = (dueTime) => {
+    const now = new Date().getTime() / 1000;
+    const diffSeconds = dueTime - now;
+    const diffHours = Math.floor(diffSeconds / 3600);
+    const diffDays = Math.floor(diffHours / 24);
+    const hoursLeft = diffHours % 24;
+
+    if (diffDays > 1) {
+        return `${diffDays} Days`;
+    } else if (diffDays === 1) {
+        return `1 Day`;
+    } else {
+        return `${hoursLeft} Hours`;
+    }
+};
+
 
 authorizeApplication();
