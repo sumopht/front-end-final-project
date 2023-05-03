@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
     <script src="script_cv.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Assignments Mycourseville</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 
 <body onload=initPage()>
@@ -22,20 +23,12 @@
                 <p class="info"> Name-Surname (English) : <span id="eng-name-info"></span></br>
                     Name-Surname (Thai) : <span id="thai-name-info"></span></p>
             </section>
+            <input class="dark-light" type="checkbox" id="dark-light" name="dark-light"/>
+            <label for="dark-light"></label>
+            <div class="light-back"></div> 
             <section class="table__SSubheader">
                 <img src="https://www.mycourseville.com/sites/all/modules/courseville/files/logo/cv-logo.png" width=45%>
 
-                <!-- <section class="section-right">
-                    <button class="button logout-button" onclick=authorizeApplication()>Login</button>
-                </section> -->
-
-                <!-- <div class="export__file">
-                    <label for="Logout" class="export__file-btn" title="Logout"></label>
-                    <input type="button" value="Logout" onclick="logout()" id="export-file">
-                    <div class="export__file-options">
-                        <label>Logout &nbsp; &#10140;</label>
-                    </div>
-                </div> -->
                 <select id="select-course" name="courses" onchange="handleSelectChange()">
                 </select>
 
@@ -51,7 +44,6 @@
                         <th> Assignment Title </th>
                         <th> Due Date </th>
                         <th> Days Left </th>
-                        <!-- <th style="text-align: center"> Add to TO-DO List </th> -->
                     </tr>
                 </thead>
                 <tbody id="main-table-body">
@@ -62,27 +54,11 @@
             </table>
         </section>
     </main>
-    <!-- <main class="Subtable">
-            <div class="wrapper">
-                <div class="todo-header">
-                    <img src="images/checklist.png" alt="icon" width=12%>
-                    <h2>TO-DO</h2>
-                    <div class="controls">
-                        <button class="clear-btn">Clear All</button>
-                    </div>
-                </div>
-                <div id="list-of-task">
-                    <label>
-                        <input type="checkbox" id="completed" name="completed" value="true"> Task 1
-                    </label>
-                    <label>
-                        <input type="checkbox" id="completed" name="completed" value="true"> Task 2
-                    </label>
-                </div>
-            </div>
-
-    </main> -->
-    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
+    
+</body>
+<body>
+    
 </body>
 
 </html>

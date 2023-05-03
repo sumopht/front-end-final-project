@@ -80,7 +80,7 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
                                             <tr id="${item.itemid}">
                                                 <td><img src="${course.course_icon}"></td>
                                                 <td>${course.title}</td>
-                                                <td>${item.title}</td>
+                                                <td><a href="https://www.mycourseville.com/?q=courseville/worksheet/${course.cv_cid}/${item.itemid}" target="_blank">${item.title}</a></td>
                                                 <td>${unixTimeToDateTime(assignments.duetime)}</td>
                                                 <td style="color: red">${estimateDaysLeft(assignments.duetime)}</td>
                                             </tr>`;
