@@ -1,5 +1,5 @@
-const backendIPAddress = "127.0.0.1:3000";
 
+const backendIPAddress = "127.0.0.1:3000";
 
 const hasAlreadyRedirected =
     localStorage.getItem("hasAlreadyRedirected") === "true";
@@ -22,7 +22,6 @@ const getUserProfile = async () => {
     )
         .then((response) => response.json())
         .then((data) => {
-            // console.log(data.user);
             document.getElementById(
                 "eng-name-info"
             ).innerHTML = `${data.user.firstname_en} ${data.user.lastname_en}`;
@@ -33,11 +32,11 @@ const getUserProfile = async () => {
         .catch((error) => console.error(error));
 };
 
+// second try----------------------------------------
 const createAssignmentTable = async (cv_cid, course_title, icon) => {
     const table_body = document.getElementById("main-table-body");
     table_body.innerHTML = "";
     console.log("pass cv_cid succesfully");
-    console.log(1, course_title);
     if (cv_cid == -1) {
         const options = {
             method: "GET",
@@ -61,7 +60,9 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
                         )
                             .then((response) => response.json())
                             .then((data) => {
+                                console.log("fetch all assignments");
                                 items = data.data;
+                                console.log(data)
                                 items.map((item) => {
                                     const options = {
                                         method: "GET",
@@ -108,12 +109,15 @@ const createAssignmentTable = async (cv_cid, course_title, icon) => {
         )
             .then((response) => response.json())
             .then((data) => {
+                console.log("fetch all assignments");
                 items = data.data;
+                console.log(data)
                 items.map((item) => {
                     const options = {
                         method: "GET",
                         credentials: "include",
                     };
+
 
                     let assignments;
                     fetch(
@@ -147,7 +151,7 @@ function handleSelectChange() {
     const selectElement = document.getElementById("select-course").value;
     const [cv_cid, course_title, icon] = selectElement.split(",");
     createAssignmentTable(cv_cid, course_title, icon);
-    console.log(cv_cid, course_title, icon);
+    console.log(cv_cid);
 }
 
 const logout = async () => {
@@ -167,17 +171,13 @@ const showCourses = async () => {
         .then((response) => response.json())
         .then((data) => {
             const courses = data;
-            // console.log(courses.data.student);
             courses.data.student.map((course) => {
                 if (course.semester == 2) {
                     fetch(`http://${backendIPAddress}/courseville/get_course_info/${course.cv_cid}`, options)
                         .then((response) => response.json())
                         .then((data) => {
                             const item1 = data;
-                            // console.log(item1);
-                            // ----------------- FILL IN YOUR CODE UNDER THIS AREA ONLY ----------------- //
                             course_dropdown.innerHTML += `<option value="${course.cv_cid}, ${item1.data.title}, ${item1.data.course_icon}">${item1.data.title}</option>`;
-                            // ----------------- FILL IN YOUR CODE ABOVE THIS AREA ONLY ----------------- //
                         }).catch((error) => console.error(error));
                 }
             });
@@ -188,7 +188,6 @@ const showCourses = async () => {
 function initPage() {
     getUserProfile();
     showCourses();
-    showTasksInTable();
 }
 
 const unixTimeToDateTime = (unixTimestamp) => {
@@ -234,3 +233,4 @@ const estimateDaysLeft = (dueTime) => {
 
 
 authorizeApplication();
+
