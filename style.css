@@ -572,3 +572,7 @@ body.dark-mode {
 .dark-mode .table__Subheader div {
   color: #ffffff;
 }
+
+.dark-light:checked + label:before{
+  background-color: #102770;
+}
